@@ -27,9 +27,9 @@ module Twocheckout
       @form = @form + "<script src=\"https://www.2checkout.com/static/checkout/javascript/direct.min.js\"></script>"
     end
 
-    def self.link(params={}, url="https://www.2checkout.com/checkout/purchase?")
-      @querystring = params.map{|k,v| "#{CGI.escape(k)}=#{CGI.escape(v)}"}.join("&")
-      @purchase_url = url + @querystring
+    def self.link(params={}, url="https://www.2checkout.com/checkout/purchase")
+      @querystring = params.map{|k,v| "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}"}.join("&")
+      @purchase_url = "#{url}?#{@querystring}"
     end
 
     def self.authorize(params={})
