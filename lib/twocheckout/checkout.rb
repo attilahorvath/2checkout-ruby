@@ -1,12 +1,12 @@
 module Twocheckout
   class Checkout < HashObject
 
-    def self.form(params={}, button_text='Proceed to Checkout')
-      @form = "<form id=\"2checkout\" action=\"https://www.2checkout.com/checkout/purchase\" method=\"post\">\n";
+    def self.form(params={}, html_options={})
+      @form = "<form id=\"#{html_options[:form_id] || '2checkout'}\"#{' class="' + html_options[:form_class] + '"' if html_options[:form_class]} action=\"https://www.2checkout.com/checkout/purchase\" method=\"post\">\n";
       params.each do |k,v|
-        @form = @form + "<input type=\"hidden\" name=\"" + k + "\" value=\"" + v.to_s + "\" />\n"
+        @form = @form + "<input type=\"hidden\" name=\"" + k.to_s + "\" value=\"" + v.to_s + "\" />\n"
       end
-      @form + "<input type=\"submit\" value=\"" + button_text + "\" />\n</form>"
+      @form + "<input type=\"submit\" value=\"#{html_options[:button_text] || 'Proceed to Checkout'}\"#{' class="' + html_options[:button_class] + '"' if html_options[:button_class]}#{' id="' + html_options[:button_id] + '"' if html_options[:button_id]} />\n</form>"
     end
 
     def self.submit(params={})
